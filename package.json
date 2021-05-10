@@ -5,18 +5,26 @@
   "repository": "git@github.com:real-jacket/RSSR.git",
   "author": "kete <jack.ke@ximalaya.com>",
   "license": "MIT",
-  "type": "module",
   "scripts": {
-    "prestart": "npx babel src/index.js --out-file dist/index.js --presets=@babel/preset-react",
-    "start": "node dist/index.js"
+    "dev": "webpack --config ./webpack/webpack.dev.config.js",
+    "babel-node": "babel src -d dist/src",
+    "start": "run-p dev babel-node && nodemon ./app.js"
   },
   "dependencies": {
+    "koa-static": "^5.0.0",
+    "koa2": "^2.0.0-alpha.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
     "@babel/core": "^7.14.0",
-    "@babel/preset-react": "^7.13.13"
+    "@babel/preset-env": "^7.14.1",
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.7.0"
   }
 }
