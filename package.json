@@ -1,0 +1,22 @@
+{
+  "name": "RSSR",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:real-jacket/RSSR.git",
+  "author": "kete <jack.ke@ximalaya.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "prestart": "npx babel src/index.js --out-file dist/index.js --presets=@babel/preset-react",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.14.0",
+    "@babel/preset-react": "^7.13.13"
+  }
+}
