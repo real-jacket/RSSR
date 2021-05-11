@@ -1,6 +1,4 @@
-const path = require('path');
-
-const resolvePath = (pathstr) => path.resolve(__dirname, pathstr);
+const { resolvePath } = require('../utils');
 
 module.exports = {
   mode: 'development',
