@@ -14,6 +14,6 @@ app.use(koaStatic('./dist/static'));
 app.use(reactSsr);
 
 //启动服务
-app.listen(port);
-
-console.log('server is start .', `http://localhost:${port}`);
+app.listen(port, () => {
+  console.log('server is start .', `http://localhost:${port}`);
+});
