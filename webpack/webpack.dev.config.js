@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const { resolvePath } = require('../utils');
 
 module.exports = {
@@ -16,4 +17,9 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      __SERVER__: false,
+    }),
+  ],
 };
