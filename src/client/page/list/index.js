@@ -1,30 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import template from './data.js';
+import { Helmet } from 'react-helmet';
 
 function List(props) {
   const [initialData, setInitialData] = useState(() => {
     if (__SERVER__) {
-      const { code, data } = props.staticContext.initialData || {};
-      return data;
+      const { fetchData, page } = props.staticContext.initialData || {};
+      return {
+        fetchData,
+        page,
+      };
     } else {
-      const { code, data } = props.initialData || {};
-      return data;
+      const { fetchData, page } = props.initialData || {};
+      return {
+        fetchData: fetchData,
+        page,
+      };
     }
   });
 
   useEffect(() => {
-    if (!initialData) {
+    let { tdk } = initialData.page || {};
+    if (tdk) {
+      document.title = tdk.title;
+    }
+    if (!initialData.fetchData) {
       List.getInitialProps().then((res) => {
-        const { code, data } = res;
-        setInitialData(data);
+        const { fetchData, page } = res;
+        setInitialData({
+          fetchData: fetchData || [],
+          page,
+        });
+        document.title = page.tdk.title;
       });
     }
-  }, []);
+  }, [initialData]);
 
   return (
     <div>
-      {initialData &&
-        initialData.map((item, index) => {
+      <Helmet>
+        <title>{initialData?.page?.tdk.title}</title>
+        <meta name="description" content={initialData?.page?.tdk.description} />
+        <meta name="keywords" content={initialData?.page?.tdk.keywords} />
+      </Helmet>
+      {initialData.fetchData?.data &&
+        initialData.fetchData?.data.map((item, index) => {
           return (
             <div key={index}>
               <h3>{item.title}</h3>
@@ -50,7 +70,16 @@ List.getInitialProps = async () => {
     });
   };
   let res = await fetchData();
-  return res;
+  return {
+    fetchData: res,
+    page: {
+      tdk: {
+        title: '文章',
+        keywords: '前端技术江湖',
+        description: '前端技术江湖',
+      },
+    },
+  };
 };
 
 export default List;

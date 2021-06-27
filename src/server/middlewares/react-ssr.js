@@ -1,5 +1,6 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { Helmet } from 'react-helmet';
 import { StaticRouter } from 'react-router';
 import App from '../../client/router';
 import routerList, { matchRoute } from '../../client/router/router-config';
@@ -23,18 +24,36 @@ export default async (ctx, next) => {
     initialData: fetchResult,
   };
 
+  let { page } = fetchResult || {};
+
+  let tdk = {
+    title: '默认标题',
+    keywords: '默认关键词',
+    description: '默认描述',
+  };
+
+  if (page && page.tdk) {
+    tdk = {
+      ...tdk,
+      ...page.tdk,
+    };
+  }
+
   const html = renderToString(
     <StaticRouter location={path} context={context}>
       <App routerList={routerList}></App>
     </StaticRouter>
   );
 
+  const helmet = Helmet.renderStatic();
+
   ctx.body = `
     <!DOCTYPE html>
     <html lang="en">
       <head>
         <meta charset="UTF-8">
-        <title>react ssr</title>
+        ${helmet.title.toString()}
+        ${helmet.meta.toString()}
       </head>
       <body>
         <div id="root">${html}</div>
