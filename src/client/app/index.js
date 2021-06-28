@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from '../router/index';
 import routerList, { matchRoute } from '../router/router-config';
+import './index.css';
 
 function clientRender() {
   // 获取初始化数据

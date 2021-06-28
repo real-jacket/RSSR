@@ -11,12 +11,18 @@
     "svr:watch": "node ./webpack/scripts/svr-code-watch.js"
   },
   "dependencies": {
+    "autoprefixer": "^10.2.6",
+    "css-loader": "^5.2.6",
     "koa-static": "^5.0.0",
     "koa2": "^2.0.0-alpha.7",
+    "postcss-loader": "^6.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "sass": "^1.35.1",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
@@ -27,6 +33,7 @@
     "@babel/preset-react": "^7.13.13",
     "babel-loader": "^8.2.2",
     "chalk": "^4.1.1",
+    "mini-css-extract-plugin": "^1.6.2",
     "nodemon": "^2.0.7",
     "npm-run-all": "^4.1.5",
     "webpack": "^5.36.2",
