@@ -5,6 +5,12 @@ import { StaticRouter } from 'react-router';
 import App from '../../client/router';
 import routerList, { matchRoute } from '../../client/router/router-config';
 
+// 导入资源处理库
+const getAssets = require('../common/asset');
+
+// 绑定资源
+const assetMap = getAssets();
+
 export default async (ctx, next) => {
   const path = ctx.request.path;
 
@@ -54,15 +60,15 @@ export default async (ctx, next) => {
         <meta charset="UTF-8">
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
-        <link rel="stylesheet" type="text/css" href="/main.css" />
+        ${assetMap.css.join('')}
       </head>
       <body>
         <div id="root">${html}</div>
         <textarea id="ssrTextInitData" style="display:none;">
         ${JSON.stringify(fetchResult)}
         </textarea>
-        <script type='text/javascript' src="main.js"></script>
       </body>
+      ${assetMap.js.join('')}
     </html>
     `;
 

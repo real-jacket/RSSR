@@ -10,12 +10,17 @@ process.env.BABEL_ENV = 'node'; //设置 babel 的运行环境
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  mode: 'development',
+  // mode: 'development',
   target: 'node',
   entry: resolvePath('../src/server/app/index.js'), //入口文件
   output: {
     filename: 'app.js',
     path: resolvePath('../dist/server'),
+  },
+  resolve: {
+    alias: {
+      '@dist': path.resolve(__dirname, '../dist'),
+    },
   },
   externals: [nodeExternals()],
   module: {
@@ -29,6 +34,8 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      __IS_PROD__: isProd,
       __SERVER__: true,
     }),
   ],
