@@ -6,10 +6,10 @@
   "author": "kete <jack.ke@ximalaya.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_ENV=development node webpack/scripts/start.js",
+    "dev": "rm -rf ./dist && NODE_ENV=development node webpack/scripts/start.js",
     "fe:watch": "webpack --config ./webpack/webpack.dev.config.js --watch",
     "svr:watch": "node ./webpack/scripts/svr-code-watch.js",
-    "build": "NODE_ENV=production npm run client:build && npm run server:build",
+    "build": "rm -rf ./dist && NODE_ENV=production npm run client:build && npm run server:build",
     "client:build": "NODE_ENV=production webpack --config ./webpack/webpack.prod.config.js",
     "server:build": "NODE_ENV=production webpack --config  ./webpack/webpack.server.config.js",
     "prod:start": "node ./dist/server/app.js",

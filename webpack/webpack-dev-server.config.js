@@ -12,6 +12,7 @@ module.exports = function (port, publicPath) {
     compress: true,
     watchContentBase: true,
     disableHostCheck: true, // 关闭Host检查
+    writeToDisk: true,
     watchOptions: {
       ignored: /node_modules/,
       aggregateTimeout: 500,
