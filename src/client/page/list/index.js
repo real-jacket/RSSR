@@ -43,7 +43,7 @@ function List(props) {
         <meta name="description" content={initialData?.page?.tdk.description} />
         <meta name="keywords" content={initialData?.page?.tdk.keywords} />
       </Helmet>
-      {initialData.fetchData?.data &&
+      {initialData.fetchData?.data ? (
         initialData.fetchData?.data.map((item, index) => {
           return (
             <div key={index}>
@@ -51,8 +51,10 @@ function List(props) {
               <p>{item.desc}</p>
             </div>
           );
-        })}
-      {!initialData && <div>暂无数据</div>}
+        })
+      ) : (
+        <div>暂无数据</div>
+      )}
     </div>
   );
 }

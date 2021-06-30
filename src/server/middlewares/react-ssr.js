@@ -14,6 +14,13 @@ const assetMap = getAssets();
 export default async (ctx, next) => {
   const path = ctx.request.path;
 
+  if (path.indexOf('.') > -1) {
+    ctx.body = null;
+    return next();
+  }
+
+  console.log('ctx.request.path', path);
+
   // 查找到的目标路由对象
   let targetRoute = matchRoute(path, routerList);
 

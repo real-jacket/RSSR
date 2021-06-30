@@ -15,10 +15,12 @@ function clientRender() {
   let route = matchRoute(document.location.pathname, routerList);
 
   // 设置路由初始化数据
-  route.initialData = initialData;
+  if (route) {
+    route.initialData = initialData;
+  }
 
   ReactDOM.hydrate(
-    <BrowserRouter basename="/">
+    <BrowserRouter>
       <App routerList={routerList} />
     </BrowserRouter>,
     document.getElementById('root')
@@ -27,3 +29,8 @@ function clientRender() {
 
 // 渲染入口
 clientRender();
+
+// 开发环境才开启
+if (process.env.NODE_ENV === 'development' && module.hot) {
+  module.hot.accept();
+}

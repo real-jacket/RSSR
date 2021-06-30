@@ -2,6 +2,10 @@ import { matchPath } from 'react-router';
 import Index from '../page/index';
 import List from '../page/list';
 
+function pageNotFound() {
+  return <div>404页面</div>;
+}
+
 export default [
   {
     path: '/',
@@ -16,6 +20,11 @@ export default [
   {
     path: '/article',
     component: List,
+    exact: true,
+  },
+  {
+    path: '*',
+    component: pageNotFound,
     exact: true,
   },
 ];

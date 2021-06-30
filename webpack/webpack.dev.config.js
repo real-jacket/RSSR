@@ -1,6 +1,10 @@
 const webpack = require('webpack');
 const { resolvePath } = require('../utils');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { wdsPort } = require('../src/share/pro-config');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   mode: 'development',
@@ -10,12 +14,22 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: resolvePath('../dist/static'),
+    publicPath: `http://localhost:${wdsPort}/`,
   },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
+        use: [
+          {
+            loader: require.resolve('babel-loader'),
+            options: {
+              plugins: [
+                isDevelopment && require.resolve('react-refresh/babel'),
+              ].filter(Boolean),
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
@@ -50,13 +64,16 @@ module.exports = {
     ],
   },
   plugins: [
+    isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    isDevelopment && new ReactRefreshWebpackPlugin(),
     new webpack.DefinePlugin({
+      __IS_PROD__: false,
       __SERVER__: false,
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
-  ],
+  ].filter(Boolean),
   optimization: {
     splitChunks: {
       cacheGroups: {
@@ -66,6 +83,11 @@ module.exports = {
           name: 'libs',
         },
       },
+    },
+  },
+  resolve: {
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
     },
   },
 };

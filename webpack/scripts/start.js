@@ -8,8 +8,9 @@ const nodeServerPort = proConfig.nodeServerPort;
 
 log(chalk.red('servers starting....'));
 
-//前端代码构建 服务进程
-const feCodeWatchProcess = spawn('npm', ['run', 'fe:watch'], {
+// 前端代码构建 服务进程
+// const feCodeWatchProcess = spawn('npm', ['run', 'fe:watch'], {
+const feCodeWatchProcess = spawn('npm', ['run', 'wds:watch'], {
   stdio: 'inherit',
   shell: process.platform === 'win32',
 });

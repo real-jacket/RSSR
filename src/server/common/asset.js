@@ -1,7 +1,10 @@
 // 生产环境中 静态资源的处理
 
+const { wdsPort } = require('../../share/pro-config');
+
 module.exports = function () {
-  let devHost = '//localhost:9001';
+  // let devHost = '//localhost:9001';
+  let devHost = `//localhost:${wdsPort}`;
 
   let jsFiles = ['libs.js', 'main.js'];
   let cssFiles = ['main.css'];

@@ -13,7 +13,7 @@ function Index() {
         <meta name="description" content="" />
         <meta name="keywords" content="" />
       </Helmet>
-      <h1 onClick={handleClick}>hello react ssr</h1>
+      <h1 onClick={handleClick}>hello rxxeact ssr</h1>
     </>
   );
 }
