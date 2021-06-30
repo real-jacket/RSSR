@@ -16,6 +16,8 @@
     "wds:watch": "BABEL_ENV=development node ./webpack/scripts/wds-start.js"
   },
   "dependencies": {
+    "@loadable/component": "^5.15.0",
+    "@loadable/server": "^5.15.0",
     "autoprefixer": "^10.2.6",
     "css-loader": "^5.2.6",
     "koa-static": "^5.0.0",
@@ -33,10 +35,13 @@
     "@babel/cli": "^7.13.16",
     "@babel/core": "^7.14.0",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.14.3",
     "@babel/preset-env": "^7.14.1",
     "@babel/preset-react": "^7.13.13",
     "@hot-loader/react-dom": "^17.0.1",
+    "@loadable/babel-plugin": "^5.13.2",
+    "@loadable/webpack-plugin": "^5.15.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "babel-loader": "^8.2.2",
     "chalk": "^4.1.1",

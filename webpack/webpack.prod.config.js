@@ -5,6 +5,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -56,6 +57,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
       __IS_PROD__: true,
       __SERVER__: false,
@@ -63,7 +65,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash:8].css',
     }),
-    new CleanWebpackPlugin(),
+    new LoadablePlugin(),
     new WebpackManifestPlugin({
       fileName: resolvePath('../dist/server/asset-manifest.json'),
     }),

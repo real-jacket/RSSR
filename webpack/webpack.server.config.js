@@ -4,6 +4,8 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const { resolvePath } = require('../utils/index');
+const LoadablePlugin = require('@loadable/webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 process.env.BABEL_ENV = 'node'; //设置 babel 的运行环境
 
@@ -16,6 +18,7 @@ module.exports = {
   output: {
     filename: 'app.js',
     path: resolvePath('../dist/server'),
+    publicPath: `/dist/server/`,
   },
   resolve: {
     alias: {
@@ -33,6 +36,8 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
+    new LoadablePlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       __IS_PROD__: isProd,

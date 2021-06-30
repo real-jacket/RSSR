@@ -1,25 +1,35 @@
+import React from 'react';
 import { matchPath } from 'react-router';
-import Index from '../page/index';
-import List from '../page/list';
+import loadable from '@loadable/component';
 
 function pageNotFound() {
   return <div>404页面</div>;
 }
 
+function Loading() {
+  return <div>加载中...</div>;
+}
+
 export default [
   {
     path: '/',
-    component: Index,
+    component: loadable(() => import('../page/index'), {
+      fallback: <Loading />,
+    }),
     exact: true,
   },
   {
     path: '/index',
-    component: Index,
+    component: loadable(() => import('../page/index'), {
+      fallback: <Loading />,
+    }),
     exact: true,
   },
   {
     path: '/article',
-    component: List,
+    component: loadable(() => import('../page/list'), {
+      fallback: <Loading />,
+    }),
     exact: true,
   },
   {

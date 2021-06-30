@@ -3,7 +3,7 @@ import Layout from '../app/layout';
 import React from 'react';
 
 function Page404() {
-  return <div>404啦 </div>;
+  return <div>404啦</div>;
 }
 
 function App({ routerList }) {

@@ -8,7 +8,7 @@ const port = proConfig.nodeServerPort || process.env.PORT;
 const app = new Koa();
 
 //设置可访问的静态资源
-app.use(koaStatic('./dist/static'));
+app.use(koaStatic('./dist'));
 
 //ssr 中间件
 app.use(reactSsr);

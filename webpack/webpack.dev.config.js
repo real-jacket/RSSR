@@ -3,6 +3,7 @@ const { resolvePath } = require('../utils');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { wdsPort } = require('../src/share/pro-config');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -66,6 +67,7 @@ module.exports = {
   plugins: [
     isDevelopment && new webpack.HotModuleReplacementPlugin(),
     isDevelopment && new ReactRefreshWebpackPlugin(),
+    new LoadablePlugin(),
     new webpack.DefinePlugin({
       __IS_PROD__: false,
       __SERVER__: false,

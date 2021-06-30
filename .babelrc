@@ -13,8 +13,10 @@
         "@babel/preset-react"
       ],
       "plugins": [
+        "@loadable/babel-plugin",
         "@babel/plugin-proposal-class-properties",
-        "./webpack/babel/plugin/no-require-css"
+        "./webpack/babel/plugin/no-require-css",
+        "@babel/plugin-syntax-dynamic-import"
       ]
     },
     "development": {
@@ -30,8 +32,10 @@
         "@babel/preset-react"
       ],
       "plugins": [
+        "@loadable/babel-plugin",
         "@babel/plugin-proposal-class-properties",
-        "@babel/plugin-transform-runtime"
+        "@babel/plugin-transform-runtime",
+        "@babel/plugin-syntax-dynamic-import"
       ]
     },
     "production": {
@@ -47,8 +51,10 @@
         "@babel/preset-react"
       ],
       "plugins": [
+        "@loadable/babel-plugin",
         "@babel/plugin-proposal-class-properties",
-        "@babel/plugin-transform-runtime"
+        "@babel/plugin-transform-runtime",
+        "@babel/plugin-syntax-dynamic-import"
       ]
     }
   }

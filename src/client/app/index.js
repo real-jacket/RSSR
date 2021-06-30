@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from '../router/index';
 import routerList, { matchRoute } from '../router/router-config';
 import './index.css';
+import { loadableReady } from '@loadable/component';
 
 function clientRender() {
   // 获取初始化数据
@@ -19,12 +20,14 @@ function clientRender() {
     route.initialData = initialData;
   }
 
-  ReactDOM.hydrate(
-    <BrowserRouter>
-      <App routerList={routerList} />
-    </BrowserRouter>,
-    document.getElementById('root')
-  );
+  loadableReady(() => {
+    ReactDOM.hydrate(
+      <BrowserRouter>
+        <App routerList={routerList} />
+      </BrowserRouter>,
+      document.getElementById('root')
+    );
+  });
 }
 
 // 渲染入口
