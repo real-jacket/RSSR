@@ -10,26 +10,35 @@ function Loading() {
   return <div>加载中...</div>;
 }
 
-export default [
+const routerList = [
   {
     path: '/',
-    component: loadable(() => import('../page/index'), {
-      fallback: <Loading />,
-    }),
+    component: loadable(
+      () => import(/* webpackPrefetch: true */ '../page/index'),
+      {
+        fallback: <Loading />,
+      }
+    ),
     exact: true,
   },
   {
     path: '/index',
-    component: loadable(() => import('../page/index'), {
-      fallback: <Loading />,
-    }),
+    component: loadable(
+      () => import(/* webpackPrefetch: true */ '../page/index'),
+      {
+        fallback: <Loading />,
+      }
+    ),
     exact: true,
   },
   {
     path: '/article',
-    component: loadable(() => import('../page/list'), {
-      fallback: <Loading />,
-    }),
+    component: loadable(
+      () => import(/* webpackPrefetch: true */ '../page/list'),
+      {
+        fallback: <Loading />,
+      }
+    ),
     exact: true,
   },
   {
@@ -38,6 +47,8 @@ export default [
     exact: true,
   },
 ];
+
+export default routerList;
 
 export const matchRoute = (path, routeList) => {
   let route;

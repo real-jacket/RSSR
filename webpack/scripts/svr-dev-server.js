@@ -6,6 +6,6 @@ const proConfig = require('../../src/share/pro-config');
 const nodeServerPort = proConfig.nodeServerPort;
 
 //启动前检查端口是否占用，杀掉占用端口的进程
-require('./free-ports')(nodeServerPort);
+// require('./free-ports')(nodeServerPort);
 
 require('../../dist/server/app');
