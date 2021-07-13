@@ -1,40 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import template from './data.js';
 import { Helmet } from 'react-helmet';
+import PageContainer from '../../common/page-container.js';
 
 function List(props) {
-  const [initialData, setInitialData] = useState(() => {
-    if (__SERVER__) {
-      const { fetchData, page } = props.staticContext.initialData || {};
-      return {
-        fetchData,
-        page,
-      };
-    } else {
-      const { fetchData, page } = props.initialData || {};
-      return {
-        fetchData: fetchData,
-        page,
-      };
-    }
-  });
-
-  useEffect(() => {
-    let { tdk } = initialData.page || {};
-    if (tdk) {
-      document.title = tdk.title;
-    }
-    if (!initialData.fetchData) {
-      List.getInitialProps().then((res) => {
-        const { fetchData, page } = res;
-        setInitialData({
-          fetchData: fetchData || [],
-          page,
-        });
-        document.title = page.tdk.title;
-      });
-    }
-  }, [initialData]);
+  const { initialData } = props;
 
   return (
     <div>
@@ -84,4 +54,4 @@ List.getInitialProps = async () => {
   };
 };
 
-export default List;
+export default PageContainer(List);

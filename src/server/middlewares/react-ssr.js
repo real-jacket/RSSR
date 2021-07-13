@@ -6,6 +6,7 @@ import App from '../../client/router';
 import routerList, { matchRoute } from '../../client/router/router-config';
 import { ChunkExtractor } from '@loadable/server';
 import * as path from 'path';
+import proConfig from '../../share/pro-config';
 
 // // 导入资源处理库
 // const getAssets = require('../common/asset');
@@ -93,6 +94,9 @@ export default async (ctx, next) => {
         ${JSON.stringify(fetchResult)}
         </textarea>
       </body>
+      <script>
+        window.__IS_SSR__=${proConfig.__IS_SSR__};
+      </script>
       ${webExtractor.getScriptTags()}
     </html>
     `;
