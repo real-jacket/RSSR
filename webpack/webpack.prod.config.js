@@ -26,13 +26,19 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(sa|sc|c)ss?$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
+          // {
+          //   loader: MiniCssExtractPlugin.loader,
+          // },
+          'isomorphic-style-loader',
           {
             loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              // isomorphic-style-loader 5.x 与 css-loader 5.x 冲突，需加上这个配置，配面导出成模块对象
+              esModule: false,
+            },
           },
           {
             loader: 'postcss-loader',
