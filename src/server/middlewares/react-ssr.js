@@ -72,9 +72,7 @@ export default async (ctx, next) => {
 
   const css = new Set();
   const insertCss = (...styles) =>
-    styles.forEach((style) => css.add(style._getCss()));
-
-  console.log('css: ', css);
+    styles.forEach((style) => css.add(style._getContent()));
 
   const jsx = webExtractor.collectChunks(
     <StaticRouter location={path} context={context}>
@@ -88,6 +86,12 @@ export default async (ctx, next) => {
 
   const helmet = Helmet.renderStatic();
 
+  const styles = [];
+  [...css].forEach((item) => {
+    let [mid, content] = item[0];
+    styles.push(`<style id="s${mid}-0" >${content}</style>`);
+  });
+
   ctx.body = `
     <!DOCTYPE html>
     <html lang="en">
@@ -96,7 +100,7 @@ export default async (ctx, next) => {
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
         ${webExtractor.getStyleTags()}
-        <style>${[...css].join('')}</style>
+        ${styles.join('')}
       </head>
       <body>
         <div id="root">${html}</div>

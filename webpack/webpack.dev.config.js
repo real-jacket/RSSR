@@ -44,6 +44,7 @@ module.exports = {
             loader: 'css-loader',
             options: {
               importLoaders: 2,
+              // isomorphic-style-loader 5.x 与 css-loader 5.x 冲突，需加上这个配置，配面导出成模块对象
               esModule: false,
             },
           },
