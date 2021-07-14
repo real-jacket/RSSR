@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import './layout.scss';
+import layoutCss from './layout.scss';
+import withStyles from 'isomorphic-style-loader/withStyles';
 
 function Layout(props) {
   return (
@@ -14,4 +15,4 @@ function Layout(props) {
   );
 }
 
-export default withRouter(Layout);
+export default withRouter(withStyles(layoutCss)(Layout));

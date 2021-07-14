@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from '../router/index';
 import routerList from '../router/router-config';
-import './index.css';
 import { loadableReady } from '@loadable/component';
+import StyleContext from 'isomorphic-style-loader/StyleContext';
 
 function clientRender() {
   // 获取初始化数据
@@ -22,10 +22,19 @@ function clientRender() {
   //   route.initialData = initialData;
   // }
 
+  const insertCss = (...styles) => {
+    // 客户端执行，插入 style
+    const removeCss = styles.map((style) => style._insertCss());
+    // 组件卸载时，移除当前 style 标签
+    return () => removeCss.forEach((dispose) => dispose());
+  };
+
   loadableReady(() => {
     ReactDOM.hydrate(
       <BrowserRouter>
-        <App routerList={routerList} />
+        <StyleContext.Provider value={{ insertCss }}>
+          <App routerList={routerList} />
+        </StyleContext.Provider>
       </BrowserRouter>,
       document.getElementById('root')
     );

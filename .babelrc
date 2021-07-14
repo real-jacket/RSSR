@@ -15,7 +15,7 @@
       "plugins": [
         "@loadable/babel-plugin",
         "@babel/plugin-proposal-class-properties",
-        "./webpack/babel/plugin/no-require-css",
+        // "./webpack/babel/plugin/no-require-css",
         "@babel/plugin-syntax-dynamic-import"
       ]
     },

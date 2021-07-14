@@ -34,13 +34,18 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(sa|sc|c)ss?$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
+          // {
+          //   loader: MiniCssExtractPlugin.loader,
+          // },
+          'isomorphic-style-loader',
           {
             loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              esModule: false,
+            },
           },
           {
             loader: 'postcss-loader',

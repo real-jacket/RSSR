@@ -54,7 +54,6 @@ export default (SourceComponent) => {
       window.addEventListener('popstate', popStateCallback);
 
       // 避坑，首次进入页面的时候 action 为 POP
-      console.log('this.props', this.props);
       const canClientFetch =
         this.props.history && this.props.history.action === 'PUSH';
       if (canClientFetch || !window.__IS_SSR__) {

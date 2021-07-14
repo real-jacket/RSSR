@@ -1,5 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import css from './index.css';
+import withStyles from 'isomorphic-style-loader/withStyles';
 
 function Index() {
   const handleClick = () => {
@@ -18,4 +20,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default withStyles(css)(Index);

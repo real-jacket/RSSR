@@ -7,6 +7,7 @@ import routerList, { matchRoute } from '../../client/router/router-config';
 import { ChunkExtractor } from '@loadable/server';
 import * as path from 'path';
 import proConfig from '../../share/pro-config';
+import StyleContext from 'isomorphic-style-loader/StyleContext';
 
 // // 导入资源处理库
 // const getAssets = require('../common/asset');
@@ -69,9 +70,17 @@ export default async (ctx, next) => {
     };
   }
 
+  const css = new Set();
+  const insertCss = (...styles) =>
+    styles.forEach((style) => css.add(style._getCss()));
+
+  console.log('css: ', css);
+
   const jsx = webExtractor.collectChunks(
     <StaticRouter location={path} context={context}>
-      <App routerList={routerList} />
+      <StyleContext.Provider value={{ insertCss }}>
+        <App routerList={routerList} />
+      </StyleContext.Provider>
     </StaticRouter>
   );
 
@@ -87,6 +96,7 @@ export default async (ctx, next) => {
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
         ${webExtractor.getStyleTags()}
+        <style>${[...css].join('')}</style>
       </head>
       <body>
         <div id="root">${html}</div>
