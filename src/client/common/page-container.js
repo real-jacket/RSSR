@@ -27,17 +27,16 @@ export default (SourceComponent) => {
     }
 
     async getInitialProps() {
-      const { match, location } = this.props;
-      const res = SourceComponent.getInitialProps
-        ? await SourceComponent.getInitialProps({ match, location })
+      const props = this.props;
+      const store = window.__STORE__;
+
+      const res = props.getInitialProps
+        ? await props.getInitialProps(store.dispatch)
+        : SourceComponent.getInitialProps
+        ? await SourceComponent.getInitialProps({ store })
         : {};
 
-      this.setState({
-        initialData: res,
-        canClientFetch: true,
-      });
-
-      let { tdk } = res.page;
+      let { tdk } = res.page || {};
       if (tdk) {
         document.title = tdk.title;
       }
@@ -56,7 +55,8 @@ export default (SourceComponent) => {
       // 避坑，首次进入页面的时候 action 为 POP
       const canClientFetch =
         this.props.history && this.props.history.action === 'PUSH';
-      if (canClientFetch || !window.__IS_SSR__) {
+
+      if (canClientFetch) {
         await this.getInitialProps();
       }
     }
@@ -64,15 +64,10 @@ export default (SourceComponent) => {
     render() {
       const props = { initialData: {}, ...this.props };
 
-      if (__SERVER__) {
-        props.initialData = this.props.staticContext.initialData || {};
+      if (this.state.canClientFetch) {
+        props.initialData = this.state.initialData || {};
       } else {
-        if (this.state.canClientFetch) {
-          props.initialData = this.state.initialData || {};
-        } else {
-          props.initialData = window.__INITIAL_DATA__;
-          window.__INITIAL_DATA__ = {};
-        }
+        props.initialData = this.props.initialData;
       }
 
       return <SourceComponent {...props}></SourceComponent>;

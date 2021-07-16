@@ -8,6 +8,8 @@ import { ChunkExtractor } from '@loadable/server';
 import * as path from 'path';
 import proConfig from '../../share/pro-config';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
+import getStore from '../../share/redux/store.js';
+import { Provider } from 'react-redux';
 
 // // 导入资源处理库
 // const getAssets = require('../common/asset');
@@ -40,20 +42,23 @@ export default async (ctx, next) => {
   // 查找到的目标路由对象
   let targetRoute = matchRoute(path, routerList);
 
+  const store = getStore();
+
+  let fetchDAtaFn,
+    fetchResult = {};
+
   // 数据预取 -> fetchResult
   // 注意： 懒加载后路由数据结构发生了变化，需要主要 load 来获取正确的方法，这个地方数据的获取需要再优化一下
-  let fetchDAtaFn = (await targetRoute.component.load()).default
-    .getInitialProps;
-
-  let fetchResult = {};
-  if (fetchDAtaFn) {
-    fetchResult = await fetchDAtaFn();
+  if (targetRoute) {
+    fetchDAtaFn =
+      (await targetRoute.component.load()).default.getInitialProps || null;
+    if (fetchDAtaFn) {
+      fetchResult = await fetchDAtaFn({ store });
+    }
   }
 
   // 将预取数据放在这里传递过去 组内通过 props.staticContext 获取
-  const context = {
-    initialData: fetchResult,
-  };
+  const context = {};
 
   let { page } = fetchResult || {};
 
@@ -75,11 +80,13 @@ export default async (ctx, next) => {
     styles.forEach((style) => css.add(style._getContent()));
 
   const jsx = webExtractor.collectChunks(
-    <StaticRouter location={path} context={context}>
-      <StyleContext.Provider value={{ insertCss }}>
-        <App routerList={routerList} />
-      </StyleContext.Provider>
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={path} context={context}>
+        <StyleContext.Provider value={{ insertCss }}>
+          <App routerList={routerList} />
+        </StyleContext.Provider>
+      </StaticRouter>
+    </Provider>
   );
 
   const html = renderToString(jsx);
@@ -105,12 +112,9 @@ export default async (ctx, next) => {
       <body>
         <div id="root">${html}</div>
         <textarea id="ssrTextInitData" style="display:none;">
-        ${JSON.stringify(fetchResult)}
+        ${JSON.stringify(store.getState())}
         </textarea>
       </body>
-      <script>
-        window.__IS_SSR__=${proConfig.__IS_SSR__};
-      </script>
       ${webExtractor.getScriptTags()}
     </html>
     `;

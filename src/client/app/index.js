@@ -5,6 +5,8 @@ import App from '../router/index';
 import routerList from '../router/router-config';
 import { loadableReady } from '@loadable/component';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
+import getStore from '../../share/redux/store.js';
+import { Provider } from 'react-redux';
 
 function clientRender() {
   // 获取初始化数据
@@ -29,13 +31,19 @@ function clientRender() {
     return () => removeCss.forEach((dispose) => dispose());
   };
 
+  const store = getStore(__INITIAL_DATA__ || null);
+
+  window.__STORE__ = store;
+
   loadableReady(() => {
     ReactDOM.hydrate(
-      <BrowserRouter>
-        <StyleContext.Provider value={{ insertCss }}>
-          <App routerList={routerList} />
-        </StyleContext.Provider>
-      </BrowserRouter>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <StyleContext.Provider value={{ insertCss }}>
+            <App routerList={routerList} />
+          </StyleContext.Provider>
+        </BrowserRouter>
+      </Provider>,
       document.getElementById('root')
     );
   });
