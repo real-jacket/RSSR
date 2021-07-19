@@ -50,13 +50,14 @@ export default (SourceComponent) => {
        * 只有在做出浏览器动作时，才会触发该事件，
        * 如用户点击浏览器的回退按钮（或者在Javascript代码中调用history.back()或者history.forward()方法）
        */
-      window.addEventListener('popstate', popStateCallback);
+      window.__IS_SSR__ &&
+        window.addEventListener('popstate', popStateCallback);
 
       // 避坑，首次进入页面的时候 action 为 POP
       const canClientFetch =
         this.props.history && this.props.history.action === 'PUSH';
 
-      if (canClientFetch) {
+      if (canClientFetch || !window.__IS_SSR__) {
         await this.getInitialProps();
       }
     }
