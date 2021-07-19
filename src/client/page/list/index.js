@@ -33,7 +33,7 @@ function List(props) {
 }
 
 // 数据预取方法
-List.getInitialProps = async ({ store }) => {
+List.getInitialProps = async ({ store, match, location }) => {
   return store.dispatch(getInitialData());
   // const fetchData = () => {
   //   return new Promise((resolve, reject) => {

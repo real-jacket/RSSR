@@ -30,10 +30,12 @@ export default (SourceComponent) => {
       const props = this.props;
       const store = window.__STORE__;
 
+      const { match, location } = props;
+
       const res = props.getInitialProps
         ? await props.getInitialProps(store.dispatch)
         : SourceComponent.getInitialProps
-        ? await SourceComponent.getInitialProps({ store })
+        ? await SourceComponent.getInitialProps({ store, match, location })
         : {};
 
       let { tdk } = res.page || {};
