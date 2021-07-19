@@ -1,4 +1,5 @@
 const path = require('path');
+const proConfig = require('../src/share/pro-config');
 
 module.exports = function (port, publicPath) {
   return {
@@ -13,6 +14,7 @@ module.exports = function (port, publicPath) {
     watchContentBase: true,
     disableHostCheck: true, // 关闭Host检查
     writeToDisk: true,
+    host: global.__LOCAL_IP__,
     watchOptions: {
       ignored: /node_modules/,
       aggregateTimeout: 500,

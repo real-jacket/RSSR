@@ -7,7 +7,6 @@ import routerList, { matchRoute } from '../../client/router/router-config';
 import { ChunkExtractor } from '@loadable/server';
 import * as path from 'path';
 import proConfig from '../../share/pro-config';
-console.log('proConfig: ', proConfig);
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import getStore from '../../share/redux/store.js';
 import { Provider } from 'react-redux';

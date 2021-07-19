@@ -15,7 +15,7 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: resolvePath('../dist/static'),
-    publicPath: `http://localhost:${wdsPort}/`,
+    publicPath: `http://${__LOCAL_IP__}:${wdsPort}/`,
   },
   module: {
     rules: [

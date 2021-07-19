@@ -6,11 +6,15 @@ const proConfig = require('../../src/share/pro-config');
 
 const nodeServerPort = proConfig.nodeServerPort;
 
+const getIp = require('../../src/server/common/get-ip');
+
+const localHostIp = getIp();
+
 log(chalk.red('servers starting....'));
 
 // 前端代码构建 服务进程
 // const feCodeWatchProcess = spawn('npm', ['run', 'fe:watch'], {
-const feCodeWatchProcess = spawn('npm', ['run', 'wds:watch'], {
+const feCodeWatchProcess = spawn('npm', ['run', 'wds:watch', localHostIp], {
   shell: process.platform === 'win32',
 });
 
@@ -30,7 +34,7 @@ feCodeWatchProcess.stdout.on('data', (data) => {
 });
 
 //服务端代码监控和编译进程
-const svrCodeWatchProcess = spawn('npm', ['run', 'svr:watch'], {
+const svrCodeWatchProcess = spawn('npm', ['run', 'svr:watch', localHostIp], {
   shell: process.platform === 'win32',
 });
 
@@ -50,9 +54,13 @@ let nodeServerProcess = null;
 
 const startNodeServer = () => {
   nodeServerProcess && nodeServerProcess.kill();
-  nodeServerProcess = spawn('node', ['./webpack/scripts/svr-dev-server.js'], {
-    shell: process.platform === 'win32',
-  });
+  nodeServerProcess = spawn(
+    'node',
+    ['./webpack/scripts/svr-dev-server.js', localHostIp],
+    {
+      shell: process.platform === 'win32',
+    }
+  );
   nodeServerProcess.stdout.on('data', print);
 };
 
