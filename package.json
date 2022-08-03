@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:real-jacket/RSSR.git",
-  "author": "kete <jack.ke@ximalaya.com>",
+  "author": "real-jacket <1762982273@qq.com>",
   "license": "MIT",
   "scripts": {
     "dev": "rm -rf ./dist && cross-env NODE_ENV=development IS_SSR=true node webpack/scripts/start.js",
